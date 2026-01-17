@@ -75,7 +75,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Toaster, toast } from "sonner@2.0.3";
 
 // --- Theme Configuration ---

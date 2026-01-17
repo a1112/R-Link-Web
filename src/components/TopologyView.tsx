@@ -4,7 +4,7 @@ import {
   Plus, Minus, Maximize, ArrowLeft, Layout, Edit, 
   PlusCircle, Database, ChevronRight, Save, X, Cpu, Globe, Share2, Layers, Box, Router, ChevronUp, Check, Eye, EyeOff, Filter, Shield, Puzzle, MoreHorizontal, MessageSquare, Zap, Activity
 } from "lucide-react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence } from "framer-motion";
 import { NodeDetailModal } from "./NodeDetailModal";
 import { toast } from "sonner@2.0.3";
 

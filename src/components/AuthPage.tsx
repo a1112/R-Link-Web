@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence } from "framer-motion";
 import { QrCode, Smartphone, Mail, ArrowRight, Github, Check, X, Loader2, Eye, EyeOff } from "lucide-react";
 import { createClient } from "@supabase/supabase-js";
 import { projectId, publicAnonKey } from "../utils/supabase/info";

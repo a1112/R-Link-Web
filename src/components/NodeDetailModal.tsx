@@ -24,7 +24,7 @@ import {
   Box,
   Plus
 } from "lucide-react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 
 const NodeDetailModal = ({ node, onClose }) => {
   // Mock data for demonstration
