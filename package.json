@@ -29,6 +29,7 @@
     "@radix-ui/react-toggle": "^1.1.2",
     "@radix-ui/react-toggle-group": "^1.1.2",
     "@radix-ui/react-tooltip": "^1.1.8",
+    "@tauri-apps/api": "^2.0.0",
     "@tailwindcss/vite": "*",
     "@vitejs/plugin-react-swc": "*",
     "class-variance-authority": "^0.7.1",
@@ -55,6 +56,7 @@
     "vite": "*"
   },
   "devDependencies": {
+    "@tauri-apps/cli": "^2.0.0",
     "@types/node": "^20.10.0",
     "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.1",
@@ -63,6 +65,11 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build"
+    "build": "vite build",
+    "tauri": "tauri",
+    "tauri:dev": "tauri dev",
+    "tauri:build": "tauri build",
+    "tauri:build:debug": "tauri build --debug",
+    "tauri:info": "tauri info"
   }
 }

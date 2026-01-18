@@ -61,16 +61,21 @@ export default defineConfig({
     allowedHosts: true,
     proxy: {
       '/config': {
-        target: 'http://localhost:80',
+        target: 'http://localhost:8000',
         changeOrigin: true,
         secure: false,
         ws: true,
       },
       '/api': {
-        target: 'http://localhost:80',
+        target: 'http://localhost:8000',
         changeOrigin: true,
         secure: false,
         ws: true,
+      },
+      '/health': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+        secure: false,
       },
     },
   },
