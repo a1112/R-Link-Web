@@ -3,8 +3,9 @@
  */
 
 export const API_CONFIG = {
-  // 基础 URL，开发环境通过 Vite 代理
-  baseURL: import.meta.env.VITE_API_BASE_URL || '/api',
+  // 基础 URL 为空，因为 API_ENDPOINTS 已包含完整路径
+  // 请求会通过 Vite 代理转发到后端
+  baseURL: import.meta.env.VITE_API_BASE_URL || '',
 
   // 请求超时时间 (毫秒)
   timeout: 30000,
@@ -40,6 +41,13 @@ export const API_ENDPOINTS = {
     resources: '/api/system/resources',
     processes: '/api/system/processes',
     uptime: '/api/system/uptime',
+  },
+
+  // 配置相关
+  config: {
+    base: '/config',
+    get: '/config',
+    save: '/config',
   },
 
   // 通用

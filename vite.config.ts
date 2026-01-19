@@ -50,9 +50,16 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  optimizeDeps: {
+    // 排除 Tauri API，避免在 Web 开发环境中尝试解析
+    exclude: ['@tauri-apps/api', '@tauri-apps/api/window', '@tauri-apps/api/core'],
+  },
   build: {
     target: 'esnext',
     outDir: 'build',
+    rollupOptions: {
+      external: ['@tauri-apps/api', '@tauri-apps/api/window', '@tauri-apps/api/core'],
+    },
   },
   server: {
     port: 3000,

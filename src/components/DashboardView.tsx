@@ -4,7 +4,7 @@
  */
 
 import React, { useMemo } from "react";
-import { Activity, Server, Monitor, Globe, HardDrive, CheckCircle2, AlertCircle } from "lucide-react";
+import { Activity, Server, Monitor, Globe, HardDrive, CheckCircle2, AlertCircle, Puzzle } from "lucide-react";
 import {
   AreaChart,
   Area,

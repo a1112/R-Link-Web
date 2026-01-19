@@ -1,6 +1,7 @@
 /**
  * Tauri 窗口工具类
  * 支持 Tauri v2 窗口操作
+ * 在非 Tauri 环境中安全跳过
  */
 
 export type TauriWindowLike = {
@@ -14,10 +15,39 @@ export type TauriWindowLike = {
 };
 
 /**
- * 获取 Tauri 窗口实例
+ * 检测是否在 Tauri 环境中运行
+ */
+export const isTauriRuntime = (): boolean => {
+  if (typeof window === "undefined") return false;
+  const w = window as any;
+  return !!(w.__TAURI__ || w.__TAURI_INTERNALS__);
+};
+
+/**
+ * 检测是否在 Electron 环境中运行
+ */
+export const isElectronRuntime = (): boolean => {
+  if (typeof window === "undefined") return false;
+  const w = window as any;
+  return !!(w.electronWindow || w.process?.versions?.electron);
+};
+
+/**
+ * 检测是否在桌面环境中运行
+ */
+export const isDesktopRuntime = (): boolean => {
+  return isTauriRuntime() || isElectronRuntime();
+};
+
+/**
+ * 获取 Tauri 窗口实例（仅在 Tauri 环境中有效）
  */
 const getTauriWindow = async (): Promise<TauriWindowLike | null> => {
   if (typeof window === "undefined") return null;
+
+  // 快速检测：如果不是 Tauri 环境，直接返回 null
+  if (!isTauriRuntime()) return null;
+
   const w = window as any;
   const tauri = w.__TAURI__;
 
@@ -48,21 +78,12 @@ const getTauriWindow = async (): Promise<TauriWindowLike | null> => {
     };
   }
 
-  // 尝试动态导入
-  try {
-    const mod = await import("@tauri-apps/api/window");
-    if (mod?.appWindow) return mod.appWindow as TauriWindowLike;
-    if (typeof mod?.getCurrent === "function") {
-      return mod.getCurrent() as TauriWindowLike;
-    }
-  } catch {
-    // 非 Tauri 环境，忽略
-  }
+  // 如果到达这里，说明 Tauri API 不可用
   return null;
 };
 
 /**
- * 执行窗口操作
+ * 执行窗口操作（仅在 Tauri 环境中执行）
  */
 export const withTauriWindow = async (
   action: (appWindow: TauriWindowLike) => Promise<void> | void,
@@ -73,26 +94,26 @@ export const withTauriWindow = async (
 };
 
 /**
- * 检测是否在 Tauri 环境中运行
+ * 同步版本的窗口操作（使用全局 API）
  */
-export const isTauriRuntime = (): boolean => {
-  if (typeof window === "undefined") return false;
-  const w = window as any;
-  return !!(w.__TAURI__ || w.__TAURI_INTERNALS__);
-};
+export const withTauriWindowSync = (
+  action: (appWindow: TauriWindowLike) => void,
+): void => {
+  if (typeof window === "undefined") return;
+  if (!isTauriRuntime()) return;
 
-/**
- * 检测是否在 Electron 环境中运行
- */
-export const isElectronRuntime = (): boolean => {
-  if (typeof window === "undefined") return false;
   const w = window as any;
-  return !!(w.electronWindow || w.process?.versions?.electron);
-};
+  const tauri = w.__TAURI__;
 
-/**
- * 检测是否在桌面环境中运行
- */
-export const isDesktopRuntime = (): boolean => {
-  return isTauriRuntime() || isElectronRuntime();
+  let appWindow: TauriWindowLike | null = null;
+
+  if (tauri?.webviewWindow?.getCurrentWebviewWindow) {
+    appWindow = tauri.webviewWindow.getCurrentWebviewWindow();
+  } else if (tauri?.window?.getCurrentWindow) {
+    appWindow = tauri.window.getCurrentWindow();
+  }
+
+  if (appWindow) {
+    action(appWindow);
+  }
 };

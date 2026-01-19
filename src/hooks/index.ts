@@ -2,7 +2,27 @@
  * 自定义 React Hooks
  */
 
-import { useEffect } from "react";
+import React, { useEffect } from "react";
+
+// ============================================
+// Supabase Hooks
+// ============================================
+
+export {
+  useAuth,
+  useRequireAuth,
+  useSupabaseQuery,
+  useSupabaseMutation,
+  useSupabaseSubscription,
+  useSupabaseRecord,
+  useSupabaseUpload,
+  useSupabasePublicUrl,
+  type UseAuthReturn,
+} from "./useSupabase";
+
+// ============================================
+// 通用 Hooks
+// ============================================
 
 /**
  * 浏览器后退导航 Hook

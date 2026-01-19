@@ -3,7 +3,7 @@
  */
 
 import React from "react";
-import { Search, Bell, User } from "lucide-react";
+import { Search, Bell, User, Puzzle } from "lucide-react";
 
 export interface HeaderProps {
   /** 当前页面标题 */
@@ -30,9 +30,9 @@ export interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({
   title,
-  username = isGuest ? 'Guest' : 'Admin User',
-  userEmail = isGuest ? 'guest@r-link.net' : 'admin@r-link.net',
   isGuest = false,
+  username,
+  userEmail,
   avatar,
   searchPlaceholder = "搜索...",
   onUserMenuClick,
@@ -40,6 +40,8 @@ export const Header: React.FC<HeaderProps> = ({
   onNotificationClick,
   hasUnreadNotifications = true,
 }) => {
+  const defaultUsername = username || (isGuest ? 'Guest' : 'Admin User');
+  const defaultUserEmail = userEmail || (isGuest ? 'guest@r-link.net' : 'admin@r-link.net');
   const defaultAvatar = isGuest ? '' : 'RL';
   const displayAvatar = avatar || defaultAvatar;
 
@@ -84,8 +86,8 @@ export const Header: React.FC<HeaderProps> = ({
           className="flex items-center gap-3 pl-2 pr-1 py-1 rounded-lg hover:bg-[var(--c-800-50)] transition-colors group"
         >
           <div className="text-right hidden sm:block">
-            <div className="text-sm font-medium text-[var(--c-200)] group-hover:text-[var(--c-100)]">{username}</div>
-            <div className="text-xs text-[var(--c-500)]">{userEmail}</div>
+            <div className="text-sm font-medium text-[var(--c-200)] group-hover:text-[var(--c-100)]">{defaultUsername}</div>
+            <div className="text-xs text-[var(--c-500)]">{defaultUserEmail}</div>
           </div>
           <div className={`w-9 h-9 rounded-lg border flex items-center justify-center text-sm font-medium transition-colors ${
             isGuest
