@@ -11,6 +11,9 @@ import {
   Link,
   Folder,
   Puzzle,
+  User,
+  Download,
+  Terminal,
 } from "lucide-react";
 
 export type RouteId =
@@ -21,7 +24,11 @@ export type RouteId =
   | 'frp'
   | 'domains'
   | 'storage'
-  | 'plugins';
+  | 'plugins'
+  | 'profile'
+  | 'downloads'
+  | 'ssh'
+  | 'console';
 
 export interface RouteConfig {
   id: RouteId;
@@ -91,13 +98,42 @@ export const routes: RouteConfig[] = [
     title: '插件中心',
     description: '扩展 R-Link 的功能与特性',
   },
+  {
+    id: 'downloads',
+    label: '下载管理',
+    icon: Download,
+    title: '下载管理',
+    description: '管理插件下载和更新任务',
+  },
+  {
+    id: 'ssh',
+    label: 'SSH 终端',
+    icon: Terminal,
+    title: 'SSH 终端',
+    description: 'Web SSH 终端连接管理',
+  },
+  {
+    id: 'console',
+    label: 'Web 控制台',
+    icon: Monitor,
+    title: 'Web 控制台',
+    description: '本地终端访问 (ttyd)',
+  },
+  {
+    id: 'profile',
+    label: '我的',
+    icon: User,
+    title: '个人中心',
+    description: '账户设置与个人偏好',
+  },
 ];
 
 export const routesByGroupId: Record<string, RouteId[]> = {
   overview: ['dashboard', 'analytics'],
-  network: ['network', 'remote', 'frp', 'domains'],
+  network: ['network', 'remote', 'ssh', 'console', 'frp', 'domains'],
   storage: ['storage'],
-  extensions: ['plugins'],
+  extensions: ['plugins', 'downloads'],
+  personal: ['profile'],
 };
 
 export const getRouteById = (id: RouteId): RouteConfig | undefined => {

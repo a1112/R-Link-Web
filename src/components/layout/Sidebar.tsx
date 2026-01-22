@@ -134,11 +134,29 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   active={activeRoute === route.id}
                   onClick={() => onRouteChange(route.id)}
                   collapsed={collapsed}
+                  badge={route.id === 'downloads' && undefined} // 可以下载数量
                 />
               );
             })}
           </>
         )}
+
+        {/* 个人中心分组 */}
+        {!collapsed && <div className="px-3 mb-2 mt-6 text-[10px] font-semibold text-[var(--c-600)] uppercase tracking-wider whitespace-nowrap">个人</div>}
+        {routesByGroupId.personal.map((routeId) => {
+          const route = routes.find(r => r.id === routeId);
+          if (!route) return null;
+          return (
+            <SidebarItem
+              key={route.id}
+              icon={route.icon}
+              label={route.label}
+              active={activeRoute === route.id}
+              onClick={() => onRouteChange(route.id)}
+              collapsed={collapsed}
+            />
+          );
+        })}
 
         {/* 游客模式提示 */}
         {isGuest && (

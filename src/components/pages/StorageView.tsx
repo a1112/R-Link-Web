@@ -3,7 +3,7 @@
  */
 
 import React, { useState } from "react";
-import { ArrowUp, HardDrive, MoreHorizontal } from "lucide-react";
+import { ArrowUp, HardDrive, MoreHorizontal, Plus } from "lucide-react";
 import { toast } from "sonner";
 import { FileIcon } from "../common";
 import { useBackNavigation } from "@/hooks";

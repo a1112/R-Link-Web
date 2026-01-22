@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Sidebar } from "./Sidebar";
 import { Header } from "./Header";
 import { UserMenu, SettingsModal } from "../modals";
+import { TermsModal } from "../modals/TermsModal";
 import type { RouteId, ThemeName } from "@/constants";
 
 export interface MainLayoutProps {
@@ -46,6 +47,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const [showTerms, setShowTerms] = useState(false);
 
   const handleLogout = () => {
     setShowUserMenu(false);
@@ -102,6 +104,9 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
               setShowUserMenu(false);
               setShowSettings(true);
             }}
+            onOpenTerms={() => {
+              setShowTerms(true);
+            }}
             onLogout={handleLogout}
             isGuest={isGuest}
             userInfo={userInfo}
@@ -117,6 +122,14 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
         onThemeChange={(theme) => {
           onThemeChange?.(theme);
         }}
+      />
+
+      {/* 用户协议弹窗 */}
+      <TermsModal
+        show={showTerms}
+        onClose={() => setShowTerms(false)}
+        onAgree={() => setShowTerms(false)}
+        forceAgree={false}
       />
     </div>
   );
@@ -134,6 +147,10 @@ function getRouteTitle(route: RouteId): string {
     domains: '域名管理',
     storage: '文件管理',
     plugins: '插件中心',
+    downloads: '下载管理',
+    ssh: 'SSH 终端',
+    console: 'Web 控制台',
+    profile: '个人中心',
   };
   return titles[route] || 'R-Link';
 }

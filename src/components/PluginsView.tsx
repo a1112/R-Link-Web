@@ -129,7 +129,7 @@ export const PluginsView: React.FC = () => {
   const { start, stop, restart, loading: actionLoading } = usePluginActions();
 
   // 分类插件
-  const installedPlugins = useMemo(() => plugins.filter(p => p), [plugins]);
+  const installedPlugins = useMemo(() => (plugins || []).filter(p => p), [plugins]);
 
   const handleStatusToggle = async (plugin: PluginUI) => {
     try {

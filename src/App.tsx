@@ -19,6 +19,9 @@ import { TopologyView } from "./components/TopologyView";
 import { DashboardView as ApiDashboardView } from "./components/DashboardView";
 import { PluginsView as ApiPluginsView } from "./components/PluginsView";
 
+// 弹窗组件
+import { TermsModal } from "./components/modals/TermsModal";
+
 // 类型定义
 type AppState = 'auth' | 'app' | 'guest';
 
@@ -30,6 +33,14 @@ const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<RouteId>("dashboard");
   const [theme, setTheme] = useState<ThemeName>("zinc");
 
+  // 用户协议弹窗状态
+  const [showTermsModal, setShowTermsModal] = useState(false);
+
+  // 检查是否已同意过协议
+  const hasAgreedToTerms = useMemo(() => {
+    return localStorage.getItem('r-link-terms-agreed') === 'true';
+  }, []);
+
   const themeStyles = useMemo(() => getThemeStyles(theme), [theme]);
 
   // 状态计算
@@ -39,11 +50,32 @@ const App: React.FC = () => {
   // 处理登录
   const handleLogin = () => {
     setRoute('app');
+    // 如果还没同意过协议，显示协议弹窗
+    if (!hasAgreedToTerms) {
+      setShowTermsModal(true);
+    }
   };
 
   // 处理游客登录
   const handleGuestLogin = () => {
     setRoute('guest');
+    // 游客也需要同意协议
+    if (!hasAgreedToTerms) {
+      setShowTermsModal(true);
+    }
+  };
+
+  // 处理同意协议
+  const handleAgreeToTerms = () => {
+    localStorage.setItem('r-link-terms-agreed', 'true');
+    setShowTermsModal(false);
+  };
+
+  // 处理拒绝协议（关闭弹窗但不记录同意）
+  const handleCloseTerms = () => {
+    setShowTermsModal(false);
+    // 可选：退出登录状态
+    // setRoute('auth');
   };
 
   // 处理登出
@@ -85,6 +117,26 @@ const App: React.FC = () => {
       case 'storage':
         return React.createElement(
           React.lazy(() => import('./components/pages/StorageView')),
+          null
+        );
+      case 'ssh':
+        return React.createElement(
+          React.lazy(() => import('./components/pages/SSHView')),
+          null
+        );
+      case 'console':
+        return React.createElement(
+          React.lazy(() => import('./components/pages/ConsoleView')),
+          null
+        );
+      case 'downloads':
+        return React.createElement(
+          React.lazy(() => import('./components/pages/DownloadsView')),
+          null
+        );
+      case 'profile':
+        return React.createElement(
+          React.lazy(() => import('./components/pages/ProfileView')),
           null
         );
       default:
@@ -148,6 +200,15 @@ const App: React.FC = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* 用户协议弹窗 */}
+      <TermsModal
+        show={showTermsModal}
+        onClose={handleCloseTerms}
+        onAgree={handleAgreeToTerms}
+        forceAgree={false}
+        title="使用条款与隐私政策"
+      />
     </div>
   );
 };

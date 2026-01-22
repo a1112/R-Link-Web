@@ -87,7 +87,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
             </button>
           </div>
 
-          <div className="flex-1 p-8 overflow-y-auto scrollbar-thin scrollbar-thumb-[var(--c-800)] scrollbar-track-transparent">
+          <div className="flex-1 p-8 overflow-y-auto scrollbar-card">
             {activeTab === "general" && (
               <div className="space-y-6 max-w-xl">
                 <div className="space-y-4">

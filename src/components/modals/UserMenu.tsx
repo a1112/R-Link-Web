@@ -4,7 +4,7 @@
 
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { User, CreditCard, Settings, LogOut } from "lucide-react";
+import { User, CreditCard, Settings, LogOut, FileText } from "lucide-react";
 
 export interface UserMenuProps {
   /** 是否显示 */
@@ -13,6 +13,8 @@ export interface UserMenuProps {
   onClose: () => void;
   /** 打开设置回调 */
   onOpenSettings: () => void;
+  /** 打开用户协议回调 */
+  onOpenTerms?: () => void;
   /** 退出登录回调 */
   onLogout: () => void;
   /** 是否游客模式 */
@@ -29,6 +31,7 @@ export const UserMenu: React.FC<UserMenuProps> = ({
   show,
   onClose,
   onOpenSettings,
+  onOpenTerms,
   onLogout,
   isGuest = false,
   userInfo = {},
@@ -76,6 +79,18 @@ export const UserMenu: React.FC<UserMenuProps> = ({
                 <CreditCard size={16} className="text-[var(--c-500)] group-hover:text-[var(--c-100)]" />
                 订阅管理
               </button>
+              {onOpenTerms && (
+                <button
+                  onClick={() => {
+                    onClose();
+                    onOpenTerms();
+                  }}
+                  className="w-full flex items-center gap-3 px-3 py-2 text-sm text-[var(--c-400)] hover:text-[var(--c-100)] hover:bg-[var(--c-800-50)] rounded-lg transition-colors group"
+                >
+                  <FileText size={16} className="text-[var(--c-500)] group-hover:text-[var(--c-100)]" />
+                  用户协议与隐私
+                </button>
+              )}
               <button
                 onClick={() => {
                   onClose();
