@@ -61,8 +61,10 @@ export default defineConfig({
       external: ['@tauri-apps/api', '@tauri-apps/api/window', '@tauri-apps/api/core'],
     },
   },
+  preview: { port: 17031, strictPort: true },
   server: {
-    port: 3000,
+    strictPort: true,
+    port: 16220,
     open: true,
     host: '0.0.0.0',
     allowedHosts: true,

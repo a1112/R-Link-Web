@@ -21,14 +21,14 @@ export const devices = [
 
 // ========== 隧道数据 ==========
 export const tunnels = [
-  { id: 1, name: "博客预览", type: "HTTP", local: ":3000", remote: "blog.r-link.net", status: "active", latency: "12ms" },
+  { id: 1, name: "博客预览", type: "HTTP", local: ":16220", remote: "blog.r-link.net", status: "active", latency: "12ms" },
   { id: 2, name: "SSH网关", type: "TCP", local: ":22", remote: "ssh.r-link.net:22022", status: "active", latency: "45ms" },
   { id: 3, name: "游戏服务器", type: "UDP", local: ":25565", remote: "play.r-link.net", status: "stopped", latency: "-" },
 ];
 
 // ========== 域名数据 ==========
 export const domains = [
-  { id: 1, name: "blog.r-link.net", target: "127.0.0.1:3000", ssl: "Active", status: "active", expiry: "2024-12-31" },
+  { id: 1, name: "blog.r-link.net", target: "127.0.0.1:16220", ssl: "Active", status: "active", expiry: "2024-12-31" },
   { id: 2, name: "api.r-link.net", target: "192.168.1.5:8080", ssl: "Active", status: "active", expiry: "2024-11-15" },
   { id: 3, name: "dev.r-link.net", target: "10.0.0.7:5000", ssl: "Expired", status: "warning", expiry: "2023-10-01" },
 ];

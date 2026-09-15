@@ -50,7 +50,7 @@ function MyComponent() {
   const { data: resources } = useSystemResources(5000);
 
   // 获取单个插件状态
-  const { data: status } = usePluginStatus('plugin-name', 3000);
+  const { data: status } = usePluginStatus('plugin-name', 16220);
 
   // 插件操作
   const { start, stop, restart, loading: actionLoading } = usePluginActions();
